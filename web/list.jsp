@@ -29,6 +29,14 @@
                 例如
                 <tr><td>烤雞腿</td></tr>
                 -->
+               
+                <%
+                String food=(String)session.getAttribute("foodList");
+                if(food==null){
+                food="";
+                }
+                %>
+                <tr><td><%=food%></td></tr>
                 
             </tbody>
         </table>

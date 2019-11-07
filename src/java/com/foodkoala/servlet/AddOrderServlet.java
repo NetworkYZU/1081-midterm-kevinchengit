@@ -8,6 +8,8 @@ package com.foodkoala.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +36,40 @@ public class AddOrderServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=UTF-8");
+        List<String> foodList = new ArrayList<String>();
+        PrintWriter out = response.getWriter();
+        try {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AddOrderServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            String food=request.getParameter("food");
+            //不知為何無法使用以下兩行，無法使用List
+            //List<String> foodList = new ArrayList<String>();
+            foodList.add(food);
+            
+            HttpSession session=request.getSession();
+            session.setAttribute(" foodList", foodList);       
+            response.sendRedirect("list.jsp");
+          
+            
+             Enumeration<String> en=request.getParameterNames();
+            while(en.hasMoreElements()){
+                String name=en.nextElement();
+                String[] sours =request.getParameterValues(name);
+               
+            }
+            out.println("</body>");
+            out.println("</html>");
+            
+      
+        } finally {
+            out.close();
+        }
         /*
         question 5 (30%)
         取得 session 物件，接收 user 傳來的 food 參數，
@@ -42,6 +78,8 @@ public class AddOrderServlet extends HttpServlet {
         question 6 (10%)
         最後外轉址到 list.jsp
         */
+   
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
